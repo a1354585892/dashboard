@@ -51,7 +51,7 @@ async function updateValue() {
 
 onMounted(() => {
   updateValue();
-  timer = setInterval(updateValue, props.autoTime);
+  timer = setInterval(updateValue, 5000);
 });
 
 onBeforeUnmount(() => {
