@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="565px" height="75px" viewBox="0 0 565 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>蒙版</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#001733" offset="0%"></stop>
+            <stop stop-color="#0080B3" offset="100%"></stop>
+        </linearGradient>
+        <path d="M0,0 L565,0 L529.517647,66.5294118 C526.736945,71.7432276 521.308991,75 515.4,75 L49.6,75 C43.6910087,75 38.2630547,71.7432276 35.4823529,66.5294118 L0,0 L0,0 Z" id="path-2"></path>
+    </defs>
+    <g id="大屏" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="大屏幕" transform="translate(-678, 0)">
+            <g id="编组-21" transform="translate(65, 0)">
+                <g id="矩形" transform="translate(613, 0)">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="蒙版" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
