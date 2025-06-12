@@ -117,6 +117,7 @@
             <!-- <pie-chart title="占比A" :data="businessData" /> -->
             <div class="side-bottom">
               <SubTitleRight title="社会贡献" />
+              <Donation />
             </div>
           </div>
         </div>
@@ -149,6 +150,7 @@ import MainTitle from "../components/MainTitle.vue";
 import SubTitle from "../components/SubTitle.vue";
 import SubTitleRight from "../components/SubTitleRight.vue";
 import Rank from "../components/Rank.vue";
+import Donation from "../components/Donation.vue";
 // 数据定义
 const salesData = ref([]);
 const orderData = ref([]);
@@ -324,6 +326,9 @@ onBeforeUnmount(() => {
       font-size: 1rem;
       // margin-top: 0.3rem;
     }
+    :deep(.num) {
+      text-shadow: 0 0 5px rgba(2, 25, 28, 0.5);
+    }
   }
   .nimbus-bg {
     position: absolute;
@@ -332,8 +337,22 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 100%;
     z-index: 1;
-    background: url("../assets/nimbus-bg.png") no-repeat center center;
+    background: url("../assets/nimbus3.gif") no-repeat center center;
     background-size: 100% 100%;
+    &::after {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: url("../assets/nimbus1.png") no-repeat center center;
+      background-size: 100% 100%;
+      opacity: 0.02;
+      z-index: 0;
+    }
   }
 }
 @keyframes rotateRing {
@@ -419,5 +438,6 @@ onBeforeUnmount(() => {
 }
 .side-bottom {
   margin-top: 4%;
+  width: 100%;
 }
 </style>
