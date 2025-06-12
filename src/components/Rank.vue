@@ -40,11 +40,11 @@ const sortedData = computed(() =>
 function simulateAPI() {
   // 模拟随机波动数据，可替换为实际请求
   return [
-    { country: "中国", data: 1800 + Math.floor(Math.random() * 100) },
-    { country: "泰国", data: 1600 + Math.floor(Math.random() * 500) },
-    { country: "马来西亚", data: 300 + Math.floor(Math.random() * 100) },
-    { country: "土耳其", data: 150 + Math.floor(Math.random() * 100) },
-    { country: "沙特阿拉伯", data: 120 + Math.floor(Math.random() * 100) },
+    { country: "中国", data: 800 + Math.floor(Math.random() * 100) },
+    { country: "泰国", data: 600 + Math.floor(Math.random() * 120) },
+    { country: "马来西亚", data: 300 + Math.floor(Math.random() * 60) },
+    { country: "土耳其", data: 150 + Math.floor(Math.random() * 120) },
+    { country: "沙特阿拉伯", data: 120 + Math.floor(Math.random() * 150) },
   ];
 }
 function animateNumber(start, end, duration, callback) {
