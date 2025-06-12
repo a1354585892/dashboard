@@ -5,34 +5,38 @@
       <div>设备总数(个)</div>
     </div>
     <div class="list">
-      <div v-for="(item, index) in listData" :key="index" class="rank-list">
-        <div class="rank-li">
-          <div>{{ item.country }}</div>
-          <div>
-            <!-- {{ item.data }} -->
-            <CounterNumber :num="item.data" />
+      <TransitionGroup name="rank" tag="div" class="list">
+        <div v-for="item in sortedData" :key="item.country" class="rank-list">
+          <div class="rank-li">
+            <div>{{ item.country }}</div>
+            <div>
+              <!-- {{ item.data }} -->
+              <CounterNumber :num="item.data" />
+            </div>
+          </div>
+          <div
+            class="rank-block"
+            :style="{
+              width: item.width,
+            }"
+          >
+            <div class="glow" />
           </div>
         </div>
-        <div
-          class="rank-block"
-          :style="{
-            width: item.width,
-          }"
-        >
-          <div class="glow" />
-        </div>
-      </div>
+      </TransitionGroup>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, onBeforeUnmount } from "vue";
+import { ref, onMounted, nextTick, onBeforeUnmount, computed } from "vue";
 import CounterNumber from "./CounterNumber1.vue";
 const rawData = ref([]); // 原始数据
 const listData = ref([]); // 带宽度的展示数据
 let timer = null;
-
+const sortedData = computed(() =>
+  [...listData.value].sort((a, b) => b.data - a.data)
+);
 function simulateAPI() {
   // 模拟随机波动数据，可替换为实际请求
   return [
@@ -193,5 +197,8 @@ onBeforeUnmount(() => {
       transform: translateX(100%);
     }
   }
+}
+.rank-move {
+  transition: transform 0.6s ease;
 }
 </style>
