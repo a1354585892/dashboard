@@ -87,7 +87,7 @@ function initEarth() {
     dom,
     map: "world",
     config: earthConfig,
-    rotateSpeed: 0.005,
+    rotateSpeed: 0.002,
   });
 
   const chinaData = geojson.features.find((item) => {
@@ -109,14 +109,54 @@ function initEarth() {
     {
       from: {
         id: 1,
-        lon: 112.45, //经度
-        lat: 34.62, //维度
+        lon: 117.285, //经度
+        lat: 34.204, //维度
       },
       to: {
         id: 2,
-        lon: 14, //经度
-        lat: 52, //维度
+        lon: 14.23, //经度
+        lat: 52.203, //维度
       },
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 2, lon: 100.5018, lat: 13.7563 }, // 泰国 曼谷
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 3, lon: 101.6869, lat: 3.139 }, // 马来西亚 吉隆坡
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 4, lon: 28.9784, lat: 41.0082 }, // 土耳其 伊斯坦布尔
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 5, lon: 46.6753, lat: 24.7136 }, // 沙特阿拉伯 利雅得
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 6, lon: -0.1276, lat: 51.5074 }, // 英国 伦敦
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 7, lon: 2.3522, lat: 48.8566 }, // 法国 巴黎
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 8, lon: 151.2093, lat: -33.8688 }, // 澳大利亚 悉尼
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 9, lon: -74.006, lat: 40.7128 }, // 美国 纽约
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 10, lon: 37.6173, lat: 55.7558 }, // 俄罗斯 莫斯科
+    },
+    {
+      from: { id: 1, lon: 117.285, lat: 34.204 },
+      to: { id: 11, lon: 139.6917, lat: 35.6895 }, // 日本 东京
     },
   ];
   chart.addData("flyLine", flyLineData);

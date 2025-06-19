@@ -144,6 +144,6 @@ const listData = ref([
   z-index: 1;
   border-radius: 12px;
   filter: drop-shadow(0 0 4px #00dceb) drop-shadow(0 0 8px #00dceb);
-  opacity: 0.6;
+  opacity: 1;
 }
 </style>

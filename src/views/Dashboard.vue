@@ -439,5 +439,8 @@ onBeforeUnmount(() => {
 .side-bottom {
   margin-top: 4%;
   width: 100%;
+  :deep(.title) {
+    margin-bottom: 1rem;
+  }
 }
 </style>
