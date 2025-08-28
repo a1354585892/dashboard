@@ -19,7 +19,7 @@ const props = defineProps({
   width: 80%;
   background: url("../assets/title-l.png") no-repeat center center;
   background-size: 100% 100%;
-  padding-top: 8.41%;
+  padding-top: 4.6vh;
   position: relative;
 }
 .text {

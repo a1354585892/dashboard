@@ -307,15 +307,17 @@ watch(
 .chart-container {
   width: 100%;
   height: 100%;
-  min-height: 300px; /* 确保最小高度 */
-  padding: 15px;
+  min-height: 0; /* 移除固定最小高度，让flex控制 */
+  padding: var(--spacing-md);
   background-color: rgba(0, 20, 80, 0.3);
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
   border: 1px solid rgba(0, 228, 255, 0.2);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 /* 
 .chart-container::before {

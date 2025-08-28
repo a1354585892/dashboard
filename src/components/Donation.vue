@@ -60,13 +60,28 @@ const listData = ref([
 </script>
 
 <style lang="less" scoped>
+.donation {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--spacing-v-xs);
+}
+
 .donation-list {
   width: 100%;
-  padding-top: 19.1%;
+  height: auto;
   position: relative;
   right: 2px;
-  & + .donation-list {
-    margin-top: 3%;
+  flex: 1;
+  min-height: var(--height-xs);
+
+  /* 在小屏幕上限制高度 */
+  @media (max-height: 800px) {
+    max-height: calc(100% / 3.5);
+  }
+
+  @media (max-height: 600px) {
+    max-height: calc(100% / 4);
   }
 }
 .donation-box {

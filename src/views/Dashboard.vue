@@ -8,7 +8,7 @@
     </header>
 
     <!-- 中间区域 -->
-    <main class="">
+    <main class="content">
       <div class="main-top">
         <div class="main-top-left">
           <!-- <line-chart title="走势A" :data="orderData" />
@@ -117,7 +117,9 @@
             <!-- <pie-chart title="占比A" :data="businessData" /> -->
             <div class="side-bottom">
               <SubTitleRight title="社会贡献" />
-              <Donation />
+              <div class="donation-container">
+                <Donation />
+              </div>
             </div>
           </div>
         </div>
@@ -218,19 +220,21 @@ onBeforeUnmount(() => {
 .dashboard {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  /* padding: 20px; */
+  width: 100vw;
+  height: 100vh;
+  padding: 0 0.78vw; /* 20px at 2560px width */
   box-sizing: border-box;
 }
 
 .header {
   display: flex;
-  height: 20%;
-  margin-bottom: 20px;
+  height: 12vh;
+  padding-bottom: 3vh; /* 20px at 1040px height */
   justify-content: center;
 }
-
+.content {
+  height: 88vh;
+}
 .left-stats,
 .right-stats {
   width: 25%;
@@ -250,21 +254,24 @@ onBeforeUnmount(() => {
 
 .digital-counter {
   width: 80%;
-  margin-top: 10px;
-  padding: 15px;
+  margin-top: 0.96vh; /* 10px at 1040px height */
+  padding: 1.44vh 0.59vw; /* 15px at both dimensions */
   background-color: rgba(0, 20, 80, 0.3);
-  border-radius: 10px;
+  border-radius: 0.39vw; /* 10px at 2560px width */
   border: 1px solid rgba(0, 228, 255, 0.3);
-  box-shadow: 0 0 15px rgba(0, 228, 255, 0.3);
+  box-shadow: 0 0 0.59vw rgba(0, 228, 255, 0.3); /* 15px at 2560px width */
 }
 
 .main-content {
   display: flex;
-  height: 64vh;
-  min-height: 690px;
+  // flex: 1; /* 占用剩余空间 */
+  // min-height: ; /* 690px at 1040px height */
+  height: 68vh;
   .main-left,
   .main-right {
     width: 25%;
+    display: flex;
+    flex-direction: column;
   }
 }
 .globe-visualization {
@@ -272,6 +279,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .panel-header {
@@ -286,7 +294,8 @@ onBeforeUnmount(() => {
 
 .panel-content {
   width: 100%;
-  height: 800px;
+  // height: var(--height-6xl); /* 76.92vh - 响应式高度 */
+  height: 68vh; /* 76.92vh - 响应式高度 */
   background-color: rgba(0, 20, 80, 0.3);
   // border-bottom-left-radius: 10px;
   // border-bottom-right-radius: 10px;
@@ -304,14 +313,14 @@ onBeforeUnmount(() => {
   width: 50%;
 }
 .basic-data {
-  margin-top: 2.4rem;
-  column-gap: 1.6rem;
+  height: 13.4vh;
+  padding-top: 1vh;
+  column-gap: var(--spacing-lg); /* 1.17vw */
 }
 .nimbus {
   text-align: center;
   width: 100%;
-  padding-top: 42.58%;
-  height: 6.75rem;
+  height: 12.4vh; /* 6.73vh - 响应式高度 */
   position: relative;
 
   .nimbus-content {
@@ -321,13 +330,17 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 100%;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 2vh;
     .text {
       color: #a6f9ff;
-      font-size: 1rem;
-      // margin-top: 0.3rem;
+      font-size: var(--font-md); /* 响应式字体 */
     }
     :deep(.num) {
-      text-shadow: 0 0 5px rgba(2, 25, 28, 0.5);
+      text-shadow: 0 0 var(--spacing-xs) rgba(2, 25, 28, 0.5);
     }
   }
   .nimbus-bg {
@@ -366,8 +379,8 @@ onBeforeUnmount(() => {
 .main-top {
   display: flex;
   width: 100%;
-  height: 19.44vh;
-  min-height: 210px;
+  height: 20vh; /* 210px at 1040px height */
+  min-width: 200px;
   .main-top-left {
     width: 28%;
   }
@@ -387,7 +400,7 @@ onBeforeUnmount(() => {
     width: 18.86%;
     .viewport-box {
       width: 100%;
-      padding-top: 107.5%;
+      padding-top: 15.7vh;
       position: relative;
       background: url("../assets/view-bg1.png") no-repeat center center;
       background-size: 100% 100%;
@@ -403,18 +416,18 @@ onBeforeUnmount(() => {
         justify-content: center;
         row-gap: 3%;
         .text1 {
-          font-size: 1.5rem;
+          font-size: var(--font-xl); /* 响应式字体 */
           color: #a6f9ff;
         }
         .text2 {
-          font-size: 0.87rem;
+          font-size: var(--font-sm); /* 响应式字体 */
           color: #a6f9ff;
         }
         .text3 {
-          font-size: 3rem;
+          font-size: var(--font-3xl); /* 响应式字体 */
           color: #6ae6ff;
           :deep(.num) {
-            font-size: 3rem;
+            font-size: var(--font-3xl);
           }
         }
       }
@@ -424,23 +437,114 @@ onBeforeUnmount(() => {
     width: 28.41%;
     .viewport-box {
       width: 100%;
-      padding-top: 87.5%;
+      padding-top: 19vh;
       position: relative;
       .viewport-content {
         .text3 {
           :deep(.num) {
-            font-size: 3.5rem;
+            font-size: var(--font-4xl); /* 响应式字体 */
           }
         }
       }
     }
   }
 }
+.main-left-box,
+.main-right-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--spacing-v-md);
+}
+.main-left-box {
+  padding-right: 1em;
+}
+.main-right-box {
+  padding-left: 1em;
+}
+/* 图表组件 - 动态分配空间 */
+.main-left-box > :first-child,
+.main-right-box > :first-child {
+  flex: 1; /* 图表组件权重更高 */
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 底部组件 - 动态分配空间 */
+.main-left-box > .side-bottom,
+.main-right-box > .side-bottom {
+  flex: 1; /* 底部组件权重较低 */
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 响应式调整 - 根据屏幕高度动态调整 */
+@media (max-height: 900px) {
+  .main-left-box > :first-child,
+  .main-right-box > :first-child {
+    flex: 1.2; /* 在较小屏幕上减少图表权重 */
+  }
+}
+
+@media (max-height: 700px) {
+  .main-left-box > :first-child,
+  .main-right-box > :first-child {
+    flex: 1; /* 在很小屏幕上平均分配 */
+  }
+}
+
+// @media (min-height: 1200px) {
+//   .main-left-box > :first-child,
+//   .main-right-box > :first-child {
+//     flex: 2; /* 在大屏幕上给图表更多空间 */
+//   }
+// }
+
 .side-bottom {
-  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%; /* 确保占满分配的空间 */
+
   :deep(.title) {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
+    flex-shrink: 0; /* 标题不收缩 */
+  }
+
+  /* 确保内容组件占满剩余空间 */
+  > :last-child {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+.donation-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden; /* 防止内容溢出 */
+  padding-left: 3px;
+}
+
+/* 响应式优化 */
+@media (max-height: 800px) {
+  .side-bottom {
+    gap: var(--spacing-v-xs); /* 减少间距 */
+  }
+
+  .donation-list {
+    max-height: calc(100% / 4); /* 在小屏幕上进一步限制高度 */
+  }
+}
+
+@media (max-height: 600px) {
+  .main-content {
+    min-height: 50vh;
+  }
+
+  .donation-container {
+    max-height: 30vh; /* 严格限制donation容器高度 */
   }
 }
 </style>

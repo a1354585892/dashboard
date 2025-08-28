@@ -7,17 +7,24 @@
       </transition>
     </router-view>
   </div>
+
+  <!-- 开发导航 -->
+  <DevNavigation v-if="showDevNavigation" />
 </template>
 
 <script setup>
 import DynamicBackground from "./components/DynamicBackground.vue";
+import DevNavigation from "./components/DevNavigation.vue";
+import { ref } from "vue";
+
+const showDevNavigation = ref(process.env.NODE_ENV === "development");
 </script>
 
 <style>
 .app-container {
   width: 100vw;
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
   position: relative;
   z-index: 1;
 }

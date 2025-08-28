@@ -1,0 +1,479 @@
+/* 响应式设计系统 */
+/* 基于设计稿 2560×1040px */
+
+:root {
+  /* 基础设计尺寸 */
+  --design-width: 2560px;
+  --design-height: 1040px;
+
+  /* 响应式单位转换 */
+  /* 1vw = 1% of viewport width */
+  /* 1vh = 1% of viewport height */
+
+  /* 常用间距 (基于设计稿像素值) */
+  --spacing-xs: 0.2vw;
+  /* 5px at 2560px */
+  --spacing-sm: 0.39vw;
+  /* 10px at 2560px */
+  --spacing-md: 0.78vw;
+  /* 20px at 2560px */
+  --spacing-lg: 1.17vw;
+  /* 30px at 2560px */
+  --spacing-xl: 1.56vw;
+  /* 40px at 2560px */
+
+  /* 垂直间距 */
+  --spacing-v-xs: 0.48vh;
+  /* 5px at 1040px */
+  --spacing-v-sm: 0.96vh;
+  /* 10px at 1040px */
+  --spacing-v-md: 1.92vh;
+  /* 20px at 1040px */
+  --spacing-v-lg: 2.88vh;
+  /* 30px at 1040px */
+  --spacing-v-xl: 3.85vh;
+  /* 40px at 1040px */
+
+  /* 字体大小 (响应式) */
+  --font-xs: 0.47vw;
+  /* 12px at 2560px */
+  --font-sm: 0.55vw;
+  /* 14px at 2560px */
+  --font-md: 0.63vw;
+  /* 16px at 2560px */
+  --font-lg: 0.78vw;
+  /* 20px at 2560px */
+  --font-xl: 0.94vw;
+  /* 24px at 2560px */
+  --font-2xl: 1.25vw;
+  /* 32px at 2560px */
+  --font-3xl: 1.88vw;
+  /* 48px at 2560px */
+  --font-4xl: 2.5vw;
+  /* 64px at 2560px */
+
+  /* 高度单位 (基于视口高度) */
+  --height-xs: 2.88vh;
+  /* 30px at 1040px */
+  --height-sm: 4.81vh;
+  /* 50px at 1040px */
+  --height-md: 6.73vh;
+  /* 70px at 1040px */
+  --height-lg: 9.62vh;
+  /* 100px at 1040px */
+  --height-xl: 14.42vh;
+  /* 150px at 1040px */
+  --height-2xl: 19.23vh;
+  /* 200px at 1040px */
+  --height-3xl: 28.85vh;
+  /* 300px at 1040px */
+  --height-4xl: 38.46vh;
+  /* 400px at 1040px */
+  --height-5xl: 57.69vh;
+  /* 600px at 1040px */
+  --height-6xl: 76.92vh;
+  /* 800px at 1040px */
+
+  /* 行高 (相对于字体大小) */
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.8;
+
+  /* 边框半径 */
+  --radius-sm: 0.2vw;
+  /* 5px at 2560px */
+  --radius-md: 0.39vw;
+  /* 10px at 2560px */
+  --radius-lg: 0.59vw;
+  /* 15px at 2560px */
+  --radius-xl: 0.78vw;
+  /* 20px at 2560px */
+
+  /* 阴影 */
+  --shadow-sm: 0 0 0.39vw rgba(0, 228, 255, 0.3);
+  /* 10px blur */
+  --shadow-md: 0 0 0.59vw rgba(0, 228, 255, 0.3);
+  /* 15px blur */
+  --shadow-lg: 0 0 0.78vw rgba(0, 228, 255, 0.3);
+  /* 20px blur */
+
+  /* 边框宽度 */
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 3px;
+}
+
+/* 响应式工具类 */
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.w-screen {
+  width: 100vw;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+/* 间距工具类 */
+.p-xs {
+  padding: var(--spacing-xs);
+}
+
+.p-sm {
+  padding: var(--spacing-sm);
+}
+
+.p-md {
+  padding: var(--spacing-md);
+}
+
+.p-lg {
+  padding: var(--spacing-lg);
+}
+
+.p-xl {
+  padding: var(--spacing-xl);
+}
+
+.m-xs {
+  margin: var(--spacing-xs);
+}
+
+.m-sm {
+  margin: var(--spacing-sm);
+}
+
+.m-md {
+  margin: var(--spacing-md);
+}
+
+.m-lg {
+  margin: var(--spacing-lg);
+}
+
+.m-xl {
+  margin: var(--spacing-xl);
+}
+
+/* 垂直间距 */
+.py-xs {
+  padding-top: var(--spacing-v-xs);
+  padding-bottom: var(--spacing-v-xs);
+}
+
+.py-sm {
+  padding-top: var(--spacing-v-sm);
+  padding-bottom: var(--spacing-v-sm);
+}
+
+.py-md {
+  padding-top: var(--spacing-v-md);
+  padding-bottom: var(--spacing-v-md);
+}
+
+.my-xs {
+  margin-top: var(--spacing-v-xs);
+  margin-bottom: var(--spacing-v-xs);
+}
+
+.my-sm {
+  margin-top: var(--spacing-v-sm);
+  margin-bottom: var(--spacing-v-sm);
+}
+
+.my-md {
+  margin-top: var(--spacing-v-md);
+  margin-bottom: var(--spacing-v-md);
+}
+
+/* 水平间距 */
+.px-xs {
+  padding-left: var(--spacing-xs);
+  padding-right: var(--spacing-xs);
+}
+
+.px-sm {
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+.px-md {
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+.mx-xs {
+  margin-left: var(--spacing-xs);
+  margin-right: var(--spacing-xs);
+}
+
+.mx-sm {
+  margin-left: var(--spacing-sm);
+  margin-right: var(--spacing-sm);
+}
+
+.mx-md {
+  margin-left: var(--spacing-md);
+  margin-right: var(--spacing-md);
+}
+
+/* 字体大小工具类 */
+.text-xs {
+  font-size: var(--font-xs);
+}
+
+.text-sm {
+  font-size: var(--font-sm);
+}
+
+.text-md {
+  font-size: var(--font-md);
+}
+
+.text-lg {
+  font-size: var(--font-lg);
+}
+
+.text-xl {
+  font-size: var(--font-xl);
+}
+
+.text-2xl {
+  font-size: var(--font-2xl);
+}
+
+.text-3xl {
+  font-size: var(--font-3xl);
+}
+
+.text-4xl {
+  font-size: var(--font-4xl);
+}
+
+/* 高度工具类 */
+.h-xs {
+  height: var(--height-xs);
+}
+
+.h-sm {
+  height: var(--height-sm);
+}
+
+.h-md {
+  height: var(--height-md);
+}
+
+.h-lg {
+  height: var(--height-lg);
+}
+
+.h-xl {
+  height: var(--height-xl);
+}
+
+.h-2xl {
+  height: var(--height-2xl);
+}
+
+.h-3xl {
+  height: var(--height-3xl);
+}
+
+.h-4xl {
+  height: var(--height-4xl);
+}
+
+.h-5xl {
+  height: var(--height-5xl);
+}
+
+.h-6xl {
+  height: var(--height-6xl);
+}
+
+/* 行高工具类 */
+.leading-tight {
+  line-height: var(--line-height-tight);
+}
+
+.leading-normal {
+  line-height: var(--line-height-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--line-height-relaxed);
+}
+
+.leading-loose {
+  line-height: var(--line-height-loose);
+}
+
+/* 边框半径工具类 */
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
+
+/* 阴影工具类 */
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* 布局工具类 */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* 位置工具类 */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+/* 文本对齐 */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* 溢出处理 */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+/* 响应式断点 */
+@media (max-width: 1920px) {
+  :root {
+    /* 在较小屏幕上稍微增大字体 */
+    --font-xs: 0.52vw;
+    --font-sm: 0.6vw;
+    --font-md: 0.7vw;
+    --font-lg: 0.85vw;
+    --font-xl: 1.05vw;
+    --font-2xl: 1.4vw;
+    --font-3xl: 2.1vw;
+    --font-4xl: 2.8vw;
+  }
+}
+
+@media (max-width: 1366px) {
+  :root {
+    /* 在更小屏幕上进一步增大字体 */
+    --font-xs: 0.6vw;
+    --font-sm: 0.7vw;
+    --font-md: 0.8vw;
+    --font-lg: 1vw;
+    --font-xl: 1.2vw;
+    --font-2xl: 1.6vw;
+    --font-3xl: 2.4vw;
+    --font-4xl: 3.2vw;
+  }
+}
+
+/* 移动设备适配 */
+@media (max-width: 768px) {
+  :root {
+    /* 移动设备使用固定字体大小 */
+    --font-xs: 12px;
+    --font-sm: 14px;
+    --font-md: 16px;
+    --font-lg: 18px;
+    --font-xl: 20px;
+    --font-2xl: 24px;
+    --font-3xl: 32px;
+    --font-4xl: 40px;
+
+    /* 移动设备间距调整 */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    --spacing-v-xs: 4px;
+    --spacing-v-sm: 8px;
+    --spacing-v-md: 16px;
+    --spacing-v-lg: 24px;
+    --spacing-v-xl: 32px;
+  }
+}
+
+/* 确保最小可读性 */
+@media (max-height: 600px) {
+  :root {
+    /* 在很矮的屏幕上使用更小的垂直间距 */
+    --spacing-v-xs: 0.3vh;
+    --spacing-v-sm: 0.6vh;
+    --spacing-v-md: 1.2vh;
+    --spacing-v-lg: 1.8vh;
+    --spacing-v-xl: 2.4vh;
+  }
+}

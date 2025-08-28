@@ -185,9 +185,9 @@
 
 .particle-line {
   position: absolute;
-  height: 2px;
+  height: var(--border-medium); /* 2px - 响应式高度 */
   width: 55%;
-  top: 2.4rem;
+  top: var(--spacing-v-lg); /* 2.88vh - 响应式位置 */
   z-index: 1;
   .light-line {
     content: "";
@@ -326,13 +326,68 @@
   .trapezoid {
     width: 30%;
     height: 1rem;
-    border: 1px solid #a6f9ff;
-    border-top: transparent;
+    // border: 1px solid #a6f9ff;
+    // border-top: transparent;
+    position: relative;
     &.trapezoid-l {
-      transform: skewX(-30deg);
+      &::after {
+        display: block;
+        content: "";
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: 1px solid #a6f9ff;
+        border-top: 0;
+        border-left: 0;
+        transform: skewX(-30deg);
+        border-bottom-right-radius: 4px;
+      }
+      &::before {
+        display: block;
+        content: "";
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 1px solid #a6f9ff;
+        border-top: 0;
+        border-right: 0;
+        transform: skewX(30deg);
+        border-bottom-left-radius: 4px;
+      }
     }
     &.trapezoid-r {
-      transform: skewX(30deg);
+      &::after {
+        display: block;
+        content: "";
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: 1px solid #a6f9ff;
+        border-top: 0;
+        border-left: 0;
+        transform: skewX(-30deg);
+        border-bottom-right-radius: 4px;
+      }
+      &::before {
+        display: block;
+        content: "";
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 1px solid #a6f9ff;
+        border-top: 0;
+        border-right: 0;
+        transform: skewX(30deg);
+        border-bottom-left-radius: 4px;
+      }
     }
   }
   .b-c-block {

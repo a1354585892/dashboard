@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import ChartTest from '../views/ChartTest.vue'
 import EffectsDemo from '../views/EffectsDemo.vue'
+import ScreenTest from '../views/ScreenTest.vue'
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/effects',
     name: 'EffectsDemo',
     component: EffectsDemo
+  },
+  {
+    path: '/screen-test',
+    name: 'ScreenTest',
+    component: ScreenTest
   },
   // 可以添加更多路由
   {

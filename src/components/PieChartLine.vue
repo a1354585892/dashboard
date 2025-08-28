@@ -125,7 +125,7 @@ function updateChart() {
       right: "20",
       top: "10",
       textStyle: {
-        color: "rgba(255, 255, 255, 0.7)",
+        color: "rgba(255, 255, 255, 1)",
         fontSize: 12,
       },
       // itemGap: 10,
@@ -245,7 +245,7 @@ watch(
 <style lang="less" scoped>
 .chart-container {
   width: 100%;
-  padding-top: 68.86%;
+  // padding-top: 68.86%;
   border-radius: 0.25rem;
   box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
   transition: all 0.3s ease;

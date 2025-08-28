@@ -87,18 +87,37 @@ onBeforeUnmount(() => {
 <style lang="less" scoped>
 .rank {
   width: 100%;
+  height: 100%;
   padding: 0 2px;
+  display: flex;
+  flex-direction: column;
+
   .rank-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    line-height: 2rem;
-    margin-bottom: 1rem;
+    line-height: var(--height-xs);
+    margin-bottom: var(--spacing-v-sm);
+    flex-shrink: 0;
   }
+
+  .list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
   .rank-list {
     background: linear-gradient(270deg, #005a9b 0%, #001733 100%);
     position: relative;
     border-radius: 4px;
+    flex: 1;
+    margin-bottom: var(--spacing-v-xs);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
     &::after {
       display: block;
       content: "";
@@ -116,21 +135,23 @@ onBeforeUnmount(() => {
       z-index: -2;
     }
     & + .rank-list {
-      margin-top: 1rem;
+      margin-top: var(--spacing-v-sm);
     }
   }
+
   .rank-li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1px 2%;
     border-radius: 8px;
-    line-height: 2rem;
-    height: 2rem;
+    line-height: var(--height-xs);
+    height: var(--height-xs);
     position: relative;
     z-index: 2;
+    flex-shrink: 0; /* 不允许收缩 */
     :deep(.num) {
-      font-size: 1rem;
+      font-size: var(--font-md);
     }
   }
   .rank-block {
