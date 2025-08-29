@@ -12,4 +12,22 @@ export default defineConfig({
       symbolId: 'icon-[name]',
     }),
   ],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    allowedHosts: [
+      'localhost',
+      '127.0.0.1',
+      'faw.ssnj.com',
+      '.ssnj.com'  // 允许所有 ssnj.com 子域名
+    ],
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://faw.ssnj.com',
+    //     changeOrigin: true,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/api/, '')
+    //   }
+    // }
+  }
 })
