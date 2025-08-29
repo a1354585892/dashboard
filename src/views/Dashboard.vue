@@ -267,11 +267,15 @@ onBeforeUnmount(() => {
   // flex: 1; /* 占用剩余空间 */
   // min-height: ; /* 690px at 1040px height */
   height: 68vh;
+  position: relative;
+  z-index: 20;
   .main-left,
   .main-right {
     width: 25%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 20;
   }
 }
 .globe-visualization {
@@ -280,6 +284,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   align-items: center;
   position: relative;
+  z-index: 10;
 }
 
 .panel-header {
@@ -301,6 +306,12 @@ onBeforeUnmount(() => {
   // border-bottom-right-radius: 10px;
   // border: 1px solid rgba(0, 228, 255, 0.3);
   // box-shadow: 0 0 15px rgba(0, 228, 255, 0.3);
+  width: 140%;
+  height: 110%;
+  position: absolute;
+  z-index: 30;
+  left: -20%;
+  top: -10%;
 }
 
 .footer {
@@ -381,6 +392,8 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 20vh; /* 210px at 1040px height */
   min-width: 200px;
+  position: relative;
+  z-index: 22;
   .main-top-left {
     width: 28%;
   }
@@ -504,7 +517,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%; /* 确保占满分配的空间 */
+  // height: 100%; /* 确保占满分配的空间 */
 
   :deep(.title) {
     margin-bottom: var(--spacing-md);

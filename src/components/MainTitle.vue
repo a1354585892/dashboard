@@ -11,6 +11,7 @@
         </div>
         <div class="title-box">
           <div class="title-bg"></div>
+          <div class="title-bg title-bg-2"></div>
           <div class="title-text">锂电池管理驾驶舱</div>
         </div>
       </div>
@@ -111,6 +112,7 @@
   left: 0%;
   width: 100%;
   height: 30%;
+  opacity: 0.4;
   background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0) 0%,
@@ -119,13 +121,14 @@
     rgba(0, 255, 255, 0.05) 75%,
     rgba(0, 0, 0, 0) 100%
   );
-  animation: chargingAnimation 3.5s infinite;
+  animation: chargingAnimation 5s infinite;
   // animation-delay: 0.4s;
   z-index: 1;
 }
 
 .title-bg-2 {
-  animation-delay: 1s; /* 延迟 2 秒后才开始动画 */
+  animation-delay: 1s; /* 延迟 1 秒后才开始动画 */
+  animation: chargingAnimation2 5s infinite;
 }
 
 .side-shape {
@@ -268,7 +271,7 @@
     opacity: 0;
   }
   30% {
-    opacity: 0.6;
+    opacity: 0.2;
   }
   80% {
     opacity: 0;
@@ -276,6 +279,26 @@
   100% {
     // transform: translateY(-16px);
     top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes chargingAnimation2 {
+  0% {
+    // transform: translateY(92px);
+
+    top: 100%;
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    // transform: translateY(-16px);
+    top: -30%;
     opacity: 0;
   }
 }

@@ -9,7 +9,7 @@
   </div>
 
   <!-- 开发导航 -->
-  <DevNavigation v-if="showDevNavigation" />
+  <!-- <DevNavigation v-if="showDevNavigation" /> -->
 </template>
 
 <script setup>

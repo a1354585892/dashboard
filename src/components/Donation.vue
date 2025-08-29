@@ -64,7 +64,7 @@ const listData = ref([
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: var(--spacing-v-xs);
+  gap: 1vh;
 }
 
 .donation-list {
