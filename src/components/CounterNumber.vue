@@ -4,16 +4,19 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 
-const props = {
+const props = defineProps({
   autoTime: {
     type: Number,
-    default: 5000,
+    default: 1000,
   },
-};
+  total: {
+    type: Number,
+    default: 0,
+  },
+});
 const displayedValue = ref(0);
-const targetValue = ref(0);
 let animationFrame = null;
 let timer = null;
 
@@ -28,7 +31,7 @@ function animateToTarget() {
   const duration = 1500; // 动画时长 1s
   const startTime = performance.now();
   const startValue = displayedValue.value;
-  const endValue = targetValue.value;
+  const endValue = props.total;
   const diff = endValue - startValue;
 
   function step(currentTime) {
@@ -42,24 +45,27 @@ function animateToTarget() {
 
   animationFrame = requestAnimationFrame(step);
 }
+const updateData = () => {
+  console.log(111, 222);
 
-async function updateValue() {
-  const newVal = await fetchValueFromAPI();
-  targetValue.value = newVal;
   animateToTarget();
-}
+  timer = setInterval(animateToTarget, 5000);
+};
 
-onMounted(() => {
-  updateValue();
-  timer = setInterval(updateValue, 5000);
-});
+watch(
+  () => props.total,
+  () => {
+    updateData();
+  }
+);
+
+onMounted(() => {});
 
 onBeforeUnmount(() => {
   clearInterval(timer);
   cancelAnimationFrame(animationFrame);
 });
 </script>
-
 
 <style scoped>
 .num {
@@ -70,4 +76,3 @@ onBeforeUnmount(() => {
   line-height: var(--line-height-tight); /* 响应式行高 */
 }
 </style>
-

@@ -49,7 +49,7 @@ async function updateValue() {
 watch(
   () => props.num,
   (val) => {
-    console.log("[ val ] >", val);
+    // console.log("[ val ] >", val);
     if (val > 0) {
       targetValue.value = val;
       updateValue();

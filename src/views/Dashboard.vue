@@ -14,14 +14,26 @@
           <!-- <line-chart title="走势A" :data="orderData" />
               <pie-chart title="占比A" :data="businessData" /> -->
           <div class="box-1">
-            <SubTitle title="这个是一个指标" />
+            <SubTitle title="基础指标" />
             <div class="flex basic-data">
               <div class="flex-1">
                 <div class="text-center nimbus">
                   <div class="nimbus-bg"></div>
                   <div class="nimbus-content">
-                    <div><CounterNumber :value="829.2" /></div>
-                    <div class="text">总裁装车容量(MWh)</div>
+                    <div>
+                      <counter-number
+                        :total="
+                          formatData(basicData.totalEnergy, 1000, 'MWh', 'kWh')
+                            .num
+                        "
+                      />
+                    </div>
+                    <div class="text">
+                      总裁装车容量({{
+                        formatData(basicData.totalEnergy, 1000, "MWh", "kWh")
+                          .unit
+                      }})
+                    </div>
                   </div>
                 </div>
               </div>
@@ -29,8 +41,18 @@
                 <div class="text-center nimbus">
                   <div class="nimbus-bg"></div>
                   <div class="nimbus-content">
-                    <div><CounterNumber :value="829.2" /></div>
-                    <div class="text">总运行时长(kh)</div>
+                    <div>
+                      <counter-number
+                        :total="
+                          formatData(basicData.dsgTimeSum, 1000, 'kh', 'h').num
+                        "
+                      />
+                    </div>
+                    <div class="text">
+                      总运行时长({{
+                        formatData(basicData.dsgTimeSum, 1000, "kh", "h").unit
+                      }})
+                    </div>
                   </div>
                 </div>
               </div>
@@ -43,7 +65,9 @@
               <div class="viewport-content">
                 <div class="text1">项目总数</div>
                 <div class="text2">单位(个)</div>
-                <div class="text3"><CounterNumber :value="829" /></div>
+                <div class="text3">
+                  <counter-number :total="basicData.projectCount" />
+                </div>
               </div>
             </div>
           </div>
@@ -52,7 +76,9 @@
               <div class="viewport-content">
                 <div class="text1">设备总数</div>
                 <div class="text2">单位(个)</div>
-                <div class="text3"><CounterNumber :value="829" /></div>
+                <div class="text3">
+                  <counter-number :total="basicData.totalDevices" />
+                </div>
               </div>
             </div>
           </div>
@@ -61,7 +87,9 @@
               <div class="viewport-content">
                 <div class="text1">覆盖国家</div>
                 <div class="text2">单位(个)</div>
-                <div class="text3"><CounterNumber :value="829" /></div>
+                <div class="text3">
+                  <counter-number :total="basicData.deviceCityCount" />
+                </div>
               </div>
             </div>
           </div>
@@ -70,14 +98,24 @@
           <!-- <line-chart title="走势A" :data="orderData" />
               <pie-chart title="占比A" :data="businessData" /> -->
           <div class="box-1">
-            <SubTitleRight title="这个是一个指标" />
+            <SubTitleRight title="电量指标" />
             <div class="flex basic-data">
               <div class="flex-1">
                 <div class="text-center nimbus">
                   <div class="nimbus-bg"></div>
                   <div class="nimbus-content">
-                    <div><CounterNumber :value="829.2" /></div>
-                    <div class="text">总充电量（MAh）</div>
+                    <div>
+                      <counter-number
+                        :total="
+                          formatData(basicData.chgCapSum, 1000, 'MAh', 'Ah').num
+                        "
+                      />
+                    </div>
+                    <div class="text">
+                      总充电量（{{
+                        formatData(basicData.chgCapSum, 1000, "MAh", "Ah").unit
+                      }}）
+                    </div>
                   </div>
                 </div>
               </div>
@@ -85,8 +123,18 @@
                 <div class="text-center nimbus">
                   <div class="nimbus-bg"></div>
                   <div class="nimbus-content">
-                    <div><CounterNumber :value="829.2" /></div>
-                    <div class="text">总放电量（MAh）</div>
+                    <div>
+                      <counter-number
+                        :total="
+                          formatData(basicData.dsgCapSum, 1000, 'MAh', 'Ah').num
+                        "
+                      />
+                    </div>
+                    <div class="text">
+                      总放电量（{{
+                        formatData(basicData.dsgCapSum, 1000, "MAh", "Ah").unit
+                      }}）
+                    </div>
                   </div>
                 </div>
               </div>
@@ -136,7 +184,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, reactive, computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
 import CircleProgress from "../components/CircleProgress.vue";
 import CounterNumber from "../components/CounterNumber.vue";
 import TrendChart from "../components/TrendChart.vue";
@@ -147,7 +197,10 @@ import GlobeVisualization from "../components/GlobeVisualization.vue";
 import DataTable from "../components/DataTable.vue";
 import BarChart from "../components/BarChart.vue";
 import DebugPanel from "../components/DebugPanel.vue";
-import { fetchDashboardData } from "../api/dashboard";
+import {
+  fetchDashboardBasicData,
+  fetchDashboardVehicleData,
+} from "../api/dashboard";
 import MainTitle from "../components/MainTitle.vue";
 import SubTitle from "../components/SubTitle.vue";
 import SubTitleRight from "../components/SubTitleRight.vue";
@@ -163,9 +216,52 @@ const productData = ref([]);
 const cityData = ref([]);
 const keyPointData = ref([]);
 const orderTotal = ref(11119);
-
+const route = useRoute(),
+  router = useRouter();
 // 模拟订单总额实时增长
 let orderTimer = null;
+
+// 数据格式化函数
+const formatData = (data, threshold, bigUnit, smallUnit) => {
+  // 数据验证：如果不是有效数字或小于0，返回0
+  if (isNaN(data) || typeof data !== "number" || data < 0) {
+    return { num: 0, unit: smallUnit };
+  }
+
+  // 阈值判断：如果 data >= threshold，使用大单位；否则使用小单位
+  if (data >= threshold) {
+    const num = Number((data / threshold).toFixed(2));
+    return { num, unit: bigUnit };
+  } else {
+    const num = Number(data.toFixed(2));
+    return { num, unit: smallUnit };
+  }
+};
+// 测试用例
+// console.log("=== 数据格式化函数测试（优化后） ===");
+// console.log("kWh -> MWh 测试:");
+// console.log("500 kWh:", formatData(500, 1000, "MWh", "kWh")); // { num: 500, unit: 'kWh' }
+// console.log("1000 kWh:", formatData(1000, 1000, "MWh", "kWh")); // { num: 1, unit: 'MWh' } - 优化：不显示1.00
+// console.log("1500 kWh:", formatData(1500, 1000, "MWh", "kWh")); // { num: 1.5, unit: 'MWh' }
+// console.log("2000 kWh:", formatData(2000, 1000, "MWh", "kWh")); // { num: 2, unit: 'MWh' } - 优化：不显示2.00
+
+// console.log("g -> kg 测试:");
+// console.log("500 g:", formatData(500, 1000, "kg", "g")); // { num: 500, unit: 'g' }
+// console.log("1000 g:", formatData(1000, 1000, "kg", "g")); // { num: 1, unit: 'kg' } - 优化：不显示1.00
+// console.log("2500 g:", formatData(2500, 1000, "kg", "g")); // { num: 2.5, unit: 'kg' }
+// console.log("3000 g:", formatData(3000, 1000, "kg", "g")); // { num: 3, unit: 'kg' } - 优化：不显示3.00
+
+// console.log("元 -> 万元 测试:");
+// console.log("5000 元:", formatData(5000, 10000, "万元", "元")); // { num: 5000, unit: '元' }
+// console.log("10000 元:", formatData(10000, 10000, "万元", "元")); // { num: 1, unit: '万元' } - 优化：不显示1.00
+// console.log("150000 元:", formatData(150000, 10000, "万元", "元")); // { num: 15, unit: '万元' } - 优化：不显示15.00
+// console.log("125000 元:", formatData(125000, 10000, "万元", "元")); // { num: 12.5, unit: '万元' }
+
+// console.log("边界情况测试:");
+// console.log("0:", formatData(0, 1000, "MWh", "kWh")); // { num: 0, unit: 'kWh' }
+// console.log("无效数据:", formatData("abc", 1000, "MWh", "kWh")); // { num: 0, unit: 'kWh' }
+// console.log("负数:", formatData(-100, 1000, "MWh", "kWh")); // { num: 0, unit: 'kWh' }
+// console.log("=== 测试结束 ===");
 
 function startOrderSimulation() {
   orderTimer = setInterval(() => {
@@ -174,30 +270,55 @@ function startOrderSimulation() {
     orderTotal.value += increment;
   }, 5000); // 每5秒更新一次
 }
+const basicData = reactive({
+  chgCapSum: void 0,
+  deviceCityCount: void 0,
+  dsgCapSum: void 0,
+  dsgTimeSum: void 0,
+  projectCount: void 0,
+  totalDevices: void 0,
+  totalEnergy: void 0,
+});
+const supplierId = computed(() => {
+  return route.params.supplierId || route.query.supplierId;
+});
+const getDeviceBasicInfo = async () => {
+  const res = await fetchDashboardBasicData(supplierId.value);
+  console.log("[ res, ] >", res);
+  if (res && res.code === 0 && res.data) {
+    Object.assign(basicData, res.data);
+  }
+};
+const getVehicleTypeDistribution = async () => {
+  const res = await fetchDashboardVehicleData(supplierId.value);
+  console.log("[ res, ] >", res);
+  if (res && res.code === 0 && res.data) {
+    //
+  }
+};
 
 // 获取数据
 onMounted(async () => {
   try {
-    console.log("开始获取仪表盘数据...");
-    const data = await fetchDashboardData();
-    console.log("获取到的数据:", data);
+    console.log("开始获取top数据...");
+    getDeviceBasicInfo();
+    getVehicleTypeDistribution();
+    // salesData.value = data.salesData;
+    // orderData.value = data.orderData;
+    // businessData.value = data.businessData;
+    // globeData.value = data.globeData;
+    // platformData.value = data.platformData;
+    // productData.value = data.productData;
+    // cityData.value = data.cityData;
+    // keyPointData.value = data.keyPointData;
 
-    salesData.value = data.salesData;
-    orderData.value = data.orderData;
-    businessData.value = data.businessData;
-    globeData.value = data.globeData;
-    platformData.value = data.platformData;
-    productData.value = data.productData;
-    cityData.value = data.cityData;
-    keyPointData.value = data.keyPointData;
-
-    console.log("数据设置完成:", {
-      salesData: salesData.value,
-      orderData: orderData.value,
-      businessData: businessData.value,
-      platformData: platformData.value,
-      productData: productData.value,
-    });
+    // console.log("数据设置完成:", {
+    //   salesData: salesData.value,
+    //   orderData: orderData.value,
+    //   businessData: businessData.value,
+    //   platformData: platformData.value,
+    //   productData: productData.value,
+    // });
 
     // 启动订单总额模拟
     startOrderSimulation();
