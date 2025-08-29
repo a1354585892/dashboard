@@ -29,16 +29,55 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, onBeforeUnmount, computed } from "vue";
+import {
+  ref,
+  onMounted,
+  nextTick,
+  onBeforeUnmount,
+  computed,
+  watch,
+} from "vue";
 import CounterNumber from "./CounterNumber1.vue";
+import { fetchDashboardRegionData } from "../api/dashboard";
+import { useRoute } from "vue-router";
+
+// 定义props接收数据
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => [],
+  },
+});
+
 const rawData = ref([]); // 原始数据
 const listData = ref([]); // 带宽度的展示数据
 let timer = null;
+const route = useRoute();
+
 const sortedData = computed(() =>
   [...listData.value].sort((a, b) => b.data - a.data)
 );
-function simulateAPI() {
-  // 模拟随机波动数据，可替换为实际请求
+
+const supplierId = computed(() => {
+  return route.params.supplierId || route.query.supplierId;
+});
+
+// 获取真实的区域分布数据
+async function fetchRegionData() {
+  try {
+    const res = await fetchDashboardRegionData(supplierId.value);
+    console.log("[ Rank组件获取区域数据 res, ] >", res);
+    if (res && res.code === 0 && res.data && Array.isArray(res.data)) {
+      return res.data.map((item) => ({
+        country: item.region,
+        data: item.count || 0,
+      }));
+    }
+  } catch (error) {
+    console.error("获取区域分布数据失败:", error);
+  }
+
+  // 如果接口失败，返回默认数据
   return [
     { country: "中国", data: 800 + Math.floor(Math.random() * 100) },
     { country: "泰国", data: 600 + Math.floor(Math.random() * 120) },
@@ -59,8 +98,18 @@ function animateNumber(start, end, duration, callback) {
   }
   requestAnimationFrame(step);
 }
-function updateData() {
-  const newData = simulateAPI();
+async function updateData() {
+  // 优先使用props传入的数据，如果没有则调用接口获取
+  let newData = [];
+  if (props.data && props.data.length > 0) {
+    newData = props.data.map((item) => ({
+      country: item.country || item.name || item.region,
+      data: item.data || item.count || item.value || 0,
+    }));
+  } else {
+    newData = await fetchRegionData();
+  }
+
   rawData.value = newData;
   const max = Math.max(...newData.map((i) => i.data));
   // 重置动画
@@ -74,9 +123,20 @@ function updateData() {
   });
 }
 
+// 监听props数据变化
+watch(
+  () => props.data,
+  (newData) => {
+    if (newData && newData.length > 0) {
+      updateData();
+    }
+  },
+  { deep: true }
+);
+
 onMounted(() => {
   updateData();
-  timer = setInterval(updateData, 10000); // 每 30 秒刷新一次
+  timer = setInterval(updateData, 10000); // 每10秒刷新一次
 });
 
 onBeforeUnmount(() => {

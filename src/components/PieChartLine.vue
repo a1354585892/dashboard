@@ -89,7 +89,15 @@ function updateChart() {
     { name: "其他", value: 200 },
   ];
 
-  const chartData = props.data && props.data.length ? props.data : defaultData;
+  let chartData = defaultData;
+  if (props.data && props.data.length) {
+    chartData = props.data.map((item) => {
+      return {
+        name: item.vehicleTypeLabel,
+        value: item.count,
+      };
+    });
+  }
 
   if (chartData.length === 0) {
     console.warn("No data provided for pie chart");

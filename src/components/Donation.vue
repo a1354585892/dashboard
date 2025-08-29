@@ -41,9 +41,26 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, computed } from "vue";
 import CounterNumber from "./CounterNumber1.vue";
-const listData = ref([
+import { fetchDashboardStatisticsData } from "../api/dashboard";
+import { useRoute } from "vue-router";
+
+// 定义props接收数据
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const route = useRoute();
+const supplierId = computed(() => {
+  return route.params.supplierId || route.query.supplierId;
+});
+
+// 默认数据
+const defaultData = [
   {
     name: "节约标准煤(kg)",
     data: 444503,
@@ -56,7 +73,70 @@ const listData = ref([
     name: "等效植树量(颗)",
     data: 8470,
   },
-]);
+];
+
+const listData = ref([...defaultData]);
+
+// 获取社会贡献数据
+async function fetchSocialContributionData() {
+  try {
+    const res = await fetchDashboardStatisticsData(supplierId.value);
+    console.log("[ Donation组件获取社会贡献数据 res, ] >", res);
+    if (res && res.code === 0 && res.data) {
+      // 将接口返回的对象数据转换为数组格式
+      const apiData = res.data;
+      return [
+        {
+          name: "节约标准煤(kg)",
+          data: apiData.savingCarbonEmission || 0,
+        },
+        {
+          name: "CO2减排量(kg)",
+          data: apiData.savingCarbonDioxideEmission || 0,
+        },
+        {
+          name: "等效植树量(颗)",
+          data: apiData.equivalentTreesQuantity || 0,
+        },
+      ];
+    }
+  } catch (error) {
+    console.error("获取社会贡献数据失败:", error);
+  }
+  return defaultData;
+}
+
+// 更新数据
+async function updateData() {
+  if (props.data && props.data.length > 0) {
+    // 使用props传入的数据
+    listData.value = props.data.map((item, index) => ({
+      name: item.name || defaultData[index]?.name || `项目${index + 1}`,
+      data:
+        item.data || item.value || item.count || defaultData[index]?.data || 0,
+    }));
+  } else {
+    // 调用接口获取数据
+    listData.value = await fetchSocialContributionData();
+  }
+}
+
+// 监听props数据变化
+watch(
+  () => props.data,
+  (newData) => {
+    if (newData && newData.length > 0) {
+      updateData();
+    }
+  },
+  { deep: true }
+);
+
+// 组件挂载时获取数据
+import { onMounted } from "vue";
+onMounted(() => {
+  updateData();
+});
 </script>
 
 <style lang="less" scoped>

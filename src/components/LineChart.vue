@@ -11,7 +11,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, onBeforeUnmount, nextTick } from "vue";
+import {
+  ref,
+  onMounted,
+  watch,
+  onBeforeUnmount,
+  nextTick,
+  computed,
+} from "vue";
 import * as echarts from "echarts";
 import ECGEffect from "./ECGEffect.vue";
 
@@ -32,10 +39,40 @@ const props = defineProps({
 const chartRef = ref(null);
 let chart = null;
 
-// 数据验证
-let xAxisData = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
-let seriesData = [5000, 6000, 4000, 7000, 5500, 6500, 4500];
-let seriesData1 = [5200, 4200, 2200, 9200, 3700, 5700, 4700];
+// 默认数据
+const defaultXAxisData = [
+  "周一",
+  "周二",
+  "周三",
+  "周四",
+  "周五",
+  "周六",
+  "周日",
+];
+const defaultSeriesData = [5000, 6000, 4000, 7000, 5500, 6500, 4500];
+const defaultSeriesData1 = [5200, 4200, 2200, 9200, 3700, 5700, 4700];
+
+// 计算实际使用的数据
+const xAxisData = computed(() => {
+  if (props.data && props.data.length > 0) {
+    return props.data.map((item) => item.date);
+  }
+  return defaultXAxisData;
+});
+
+const seriesData = computed(() => {
+  if (props.data && props.data.length) {
+    return props.data.map((item) => item.chargeCap);
+  }
+  return defaultSeriesData;
+});
+
+const seriesData1 = computed(() => {
+  if (props.data && props.data.length) {
+    return props.data.map((item) => item.dischargeCap);
+  }
+  return defaultSeriesData1;
+});
 function initChart() {
   if (!chartRef.value) {
     console.warn("Chart container not found");
@@ -74,7 +111,7 @@ function updateChart() {
     return;
   }
 
-  if (xAxisData.length === 0 && seriesData.length === 0) {
+  if (xAxisData.value.length === 0 && seriesData.value.length === 0) {
     console.warn("No data provided for chart");
     // 显示空数据提示
     const emptyOption = {
@@ -102,7 +139,7 @@ function updateChart() {
     },
     xAxis: {
       type: "category",
-      data: xAxisData,
+      data: xAxisData.value,
       axisLine: {
         lineStyle: {
           color: "rgba(255, 255, 255, 0)",
@@ -138,7 +175,7 @@ function updateChart() {
     },
     series: [
       {
-        data: seriesData,
+        data: seriesData.value,
         type: "line",
         name: "充电",
         // smooth: true,
@@ -160,16 +197,6 @@ function updateChart() {
         },
         emphasis: {
           focus: "series",
-          // itemStyle: {
-          //   borderWidth: 4,
-          //   shadowBlur: 20,
-          //   shadowColor: "rgba(0, 228, 255, 1)",
-          //   borderColor: "#00ffcc",
-          // },
-          // lineStyle: {
-          //   width: 6,
-          //   shadowBlur: 15,
-          // },
         },
         // 添加动画效果
         animationDuration: 3000,
@@ -179,7 +206,7 @@ function updateChart() {
         },
       },
       {
-        data: seriesData1,
+        data: seriesData1.value,
         type: "line",
         name: "放电",
         // smooth: true,
@@ -300,6 +327,17 @@ watch(
       initChart();
     }
   }
+);
+
+// 监听props数据变化
+watch(
+  () => props.data,
+  () => {
+    if (chart) {
+      updateChart();
+    }
+  },
+  { deep: true }
 );
 </script>
 

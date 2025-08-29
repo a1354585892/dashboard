@@ -145,12 +145,12 @@
       <div class="main-content">
         <div class="main-side main-left">
           <div class="main-left-box">
-            <pie-chart-line />
+            <pie-chart-line :data="businessData" />
             <!-- <pie-chart title="占比A" :data="businessData" /> -->
 
             <div class="side-bottom">
               <SubTitle title="区域分布" />
-              <Rank />
+              <Rank :data="platformData" />
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@
             <div class="side-bottom">
               <SubTitleRight title="社会贡献" />
               <div class="donation-container">
-                <Donation />
+                <Donation :data="productData" />
               </div>
             </div>
           </div>
@@ -200,6 +200,9 @@ import DebugPanel from "../components/DebugPanel.vue";
 import {
   fetchDashboardBasicData,
   fetchDashboardVehicleData,
+  fetchDashboardChargingData,
+  fetchDashboardRegionData,
+  fetchDashboardStatisticsData,
 } from "../api/dashboard";
 import MainTitle from "../components/MainTitle.vue";
 import SubTitle from "../components/SubTitle.vue";
@@ -291,34 +294,64 @@ const getDeviceBasicInfo = async () => {
 };
 const getVehicleTypeDistribution = async () => {
   const res = await fetchDashboardVehicleData(supplierId.value);
-  console.log("[ res, ] >", res);
+  console.log("[ 应用领域数据 res, ] >", res);
   if (res && res.code === 0 && res.data) {
-    //
+    // 将数据传递给应用领域折线图组件
+    businessData.value = res.data;
+  }
+};
+
+// 获取充放电趋势数据
+const getChargingTrendData = async () => {
+  const res = await fetchDashboardChargingData(supplierId.value);
+  console.log("[ 充放电趋势数据 res, ] >", res);
+  if (res && res.code === 0 && res.data) {
+    // 将数据传递给充放电趋势图组件
+    orderData.value = res.data;
+  }
+};
+
+// 获取区域分布数据
+const getRegionDistributionData = async () => {
+  const res = await fetchDashboardRegionData(supplierId.value);
+  console.log("[ 区域分布数据 res, ] >", res);
+  if (res && res.code === 0 && res.data) {
+    // 将数据传递给区域分布组件
+    platformData.value = res.data;
+  }
+};
+
+// 获取社会贡献数据
+const getSocialContributionData = async () => {
+  const res = await fetchDashboardStatisticsData(supplierId.value);
+  console.log("[ 社会贡献数据 res, ] >", res);
+  if (res && res.code === 0 && res.data) {
+    // 将数据传递给社会贡献组件
+    productData.value = res.data;
   }
 };
 
 // 获取数据
 onMounted(async () => {
   try {
-    console.log("开始获取top数据...");
-    getDeviceBasicInfo();
-    getVehicleTypeDistribution();
-    // salesData.value = data.salesData;
-    // orderData.value = data.orderData;
-    // businessData.value = data.businessData;
-    // globeData.value = data.globeData;
-    // platformData.value = data.platformData;
-    // productData.value = data.productData;
-    // cityData.value = data.cityData;
-    // keyPointData.value = data.keyPointData;
+    console.log("开始获取仪表盘数据...");
 
-    // console.log("数据设置完成:", {
-    //   salesData: salesData.value,
-    //   orderData: orderData.value,
-    //   businessData: businessData.value,
-    //   platformData: platformData.value,
-    //   productData: productData.value,
-    // });
+    // 并行获取所有数据
+    await Promise.all([
+      getDeviceBasicInfo(), // 基础统计数据
+      getVehicleTypeDistribution(), // 应用领域折线图数据
+      getChargingTrendData(), // 充放电趋势数据
+      getRegionDistributionData(), // 区域分布数据
+      getSocialContributionData(), // 社会贡献数据
+    ]);
+
+    console.log("所有数据获取完成:", {
+      basicData: basicData,
+      businessData: businessData.value,
+      orderData: orderData.value,
+      platformData: platformData.value,
+      productData: productData.value,
+    });
 
     // 启动订单总额模拟
     startOrderSimulation();
