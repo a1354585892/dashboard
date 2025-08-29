@@ -64,6 +64,11 @@ const earthConfig = {
   // 地球
   earth: {
     color: "#00142C",
+    // material: "MeshPhongMaterial", //材质类型
+
+    dragConfig: {
+      disableY: true,
+    },
   },
 };
 
