@@ -80,7 +80,7 @@ export async function fetchDashboardBasicData(supplierId) {
   }
 }
 
-// 获取仪表盘所有数据
+// 获取应用领域数据车辆类型分布
 export async function fetchDashboardVehicleData(supplierId) {
   try {
     // 调用真实的统计数据接口
