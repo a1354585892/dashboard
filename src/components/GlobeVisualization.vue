@@ -241,6 +241,7 @@ watch(
   position: relative;
   /* overflow: hidden; */
   background-color: rgba(4, 13, 33, 0.3);
+  /* background-color: transparent !important; */
   border-radius: 8px;
 }
 </style>

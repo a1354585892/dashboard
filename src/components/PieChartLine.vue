@@ -131,7 +131,7 @@ function updateChart() {
     legend: {
       // orient: "vertical",
       right: "20",
-      top: "10",
+      top: "10%",
       textStyle: {
         color: "rgba(255, 255, 255, 1)",
         fontSize: 12,

@@ -209,6 +209,7 @@ import SubTitle from "../components/SubTitle.vue";
 import SubTitleRight from "../components/SubTitleRight.vue";
 import Rank from "../components/Rank.vue";
 import Donation from "../components/Donation.vue";
+import { formatData } from "../common/util.js";
 // 数据定义
 const salesData = ref([]);
 const orderData = ref([]);
@@ -225,46 +226,21 @@ const route = useRoute(),
 let orderTimer = null;
 
 // 数据格式化函数
-const formatData = (data, threshold, bigUnit, smallUnit) => {
-  // 数据验证：如果不是有效数字或小于0，返回0
-  if (isNaN(data) || typeof data !== "number" || data < 0) {
-    return { num: 0, unit: smallUnit };
-  }
+// const formatData = (data, threshold, bigUnit, smallUnit) => {
+//   // 数据验证：如果不是有效数字或小于0，返回0
+//   if (isNaN(data) || typeof data !== "number" || data < 0) {
+//     return { num: 0, unit: smallUnit };
+//   }
 
-  // 阈值判断：如果 data >= threshold，使用大单位；否则使用小单位
-  if (data >= threshold) {
-    const num = Number((data / threshold).toFixed(2));
-    return { num, unit: bigUnit };
-  } else {
-    const num = Number(data.toFixed(2));
-    return { num, unit: smallUnit };
-  }
-};
-// 测试用例
-// console.log("=== 数据格式化函数测试（优化后） ===");
-// console.log("kWh -> MWh 测试:");
-// console.log("500 kWh:", formatData(500, 1000, "MWh", "kWh")); // { num: 500, unit: 'kWh' }
-// console.log("1000 kWh:", formatData(1000, 1000, "MWh", "kWh")); // { num: 1, unit: 'MWh' } - 优化：不显示1.00
-// console.log("1500 kWh:", formatData(1500, 1000, "MWh", "kWh")); // { num: 1.5, unit: 'MWh' }
-// console.log("2000 kWh:", formatData(2000, 1000, "MWh", "kWh")); // { num: 2, unit: 'MWh' } - 优化：不显示2.00
-
-// console.log("g -> kg 测试:");
-// console.log("500 g:", formatData(500, 1000, "kg", "g")); // { num: 500, unit: 'g' }
-// console.log("1000 g:", formatData(1000, 1000, "kg", "g")); // { num: 1, unit: 'kg' } - 优化：不显示1.00
-// console.log("2500 g:", formatData(2500, 1000, "kg", "g")); // { num: 2.5, unit: 'kg' }
-// console.log("3000 g:", formatData(3000, 1000, "kg", "g")); // { num: 3, unit: 'kg' } - 优化：不显示3.00
-
-// console.log("元 -> 万元 测试:");
-// console.log("5000 元:", formatData(5000, 10000, "万元", "元")); // { num: 5000, unit: '元' }
-// console.log("10000 元:", formatData(10000, 10000, "万元", "元")); // { num: 1, unit: '万元' } - 优化：不显示1.00
-// console.log("150000 元:", formatData(150000, 10000, "万元", "元")); // { num: 15, unit: '万元' } - 优化：不显示15.00
-// console.log("125000 元:", formatData(125000, 10000, "万元", "元")); // { num: 12.5, unit: '万元' }
-
-// console.log("边界情况测试:");
-// console.log("0:", formatData(0, 1000, "MWh", "kWh")); // { num: 0, unit: 'kWh' }
-// console.log("无效数据:", formatData("abc", 1000, "MWh", "kWh")); // { num: 0, unit: 'kWh' }
-// console.log("负数:", formatData(-100, 1000, "MWh", "kWh")); // { num: 0, unit: 'kWh' }
-// console.log("=== 测试结束 ===");
+//   // 阈值判断：如果 data >= threshold，使用大单位；否则使用小单位
+//   if (data >= threshold) {
+//     const num = Number((data / threshold).toFixed(2));
+//     return { num, unit: bigUnit };
+//   } else {
+//     const num = Number(data.toFixed(2));
+//     return { num, unit: smallUnit };
+//   }
+// };
 
 function startOrderSimulation() {
   orderTimer = setInterval(() => {
@@ -420,7 +396,7 @@ onBeforeUnmount(() => {
   display: flex;
   // flex: 1; /* 占用剩余空间 */
   // min-height: ; /* 690px at 1040px height */
-  height: 68vh;
+  height: 66vh;
   position: relative;
   z-index: 20;
   .main-left,
@@ -454,18 +430,19 @@ onBeforeUnmount(() => {
 .panel-content {
   width: 100%;
   // height: var(--height-6xl); /* 76.92vh - 响应式高度 */
-  height: 68vh; /* 76.92vh - 响应式高度 */
-  background-color: rgba(0, 20, 80, 0.3);
+  // height: 68vh; /* 76.92vh - 响应式高度 */
+  // background-color: rgba(0, 20, 80, 0.3);
   // border-bottom-left-radius: 10px;
   // border-bottom-right-radius: 10px;
   // border: 1px solid rgba(0, 228, 255, 0.3);
   // box-shadow: 0 0 15px rgba(0, 228, 255, 0.3);
   width: 140%;
-  height: 110%;
+  height: 100%;
   position: absolute;
   z-index: 30;
   left: -20%;
-  top: -10%;
+  top: 0%;
+  background-color: transparent !important;
 }
 
 .footer {
@@ -642,7 +619,7 @@ onBeforeUnmount(() => {
 .main-right-box > .side-bottom {
   flex: 1; /* 底部组件权重较低 */
   min-height: 0;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 /* 响应式调整 - 根据屏幕高度动态调整 */

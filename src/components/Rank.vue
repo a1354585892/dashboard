@@ -1,11 +1,11 @@
 <template>
   <div class="rank">
     <div class="rank-title">
-      <div>国家</div>
+      <div class="rank-title-name">地区</div>
       <div>设备总数(个)</div>
     </div>
-    <div class="list">
-      <TransitionGroup name="rank" tag="div" class="list">
+    <div class="list main-list">
+      <TransitionGroup name="rank" tag="div" class="list h-0">
         <div v-for="item in sortedData" :key="item.country" class="rank-list">
           <div class="rank-li">
             <div>{{ item.country }}</div>
@@ -159,6 +159,9 @@ onBeforeUnmount(() => {
     line-height: var(--height-xs);
     margin-bottom: var(--spacing-v-sm);
     flex-shrink: 0;
+    .rank-title-name {
+      padding-left: 2%;
+    }
   }
 
   .list {
@@ -167,13 +170,17 @@ onBeforeUnmount(() => {
     flex-direction: column;
     justify-content: space-around;
   }
-
+  .main-list {
+    padding-bottom: 4px;
+  }
   .rank-list {
     background: linear-gradient(270deg, #005a9b 0%, #001733 100%);
     position: relative;
     border-radius: 4px;
     flex: 1;
-    margin-bottom: var(--spacing-v-xs);
+    display: flex;
+    align-items: center;
+    // margin-bottom: var(--spacing-v-xs);
 
     &:last-child {
       margin-bottom: 0;
@@ -200,6 +207,8 @@ onBeforeUnmount(() => {
   }
 
   .rank-li {
+    width: 100%;
+    flex: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;

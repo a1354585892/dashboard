@@ -131,10 +131,10 @@ function updateChart() {
 
   const option = {
     grid: {
-      top: "20%",
+      top: "24.38%",
       right: 0,
       bottom: "10%",
-      left: "5%",
+      left: "4.6%",
       containLabel: true,
     },
     xAxis: {
@@ -171,6 +171,10 @@ function updateChart() {
       },
       axisTick: {
         show: false,
+      },
+      name: "kWh",
+      nameTextStyle: {
+        color: "rgba(255, 255, 255, 0.7)",
       },
     },
     series: [
@@ -344,9 +348,9 @@ watch(
 <style lang="less" scoped>
 .chart-container {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   min-height: 0; /* 移除固定最小高度，让flex控制 */
-  padding: var(--spacing-md);
+  // padding: var(--spacing-md);
   background-color: rgba(0, 20, 80, 0.3);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
@@ -357,7 +361,7 @@ watch(
   display: flex;
   flex-direction: column;
 }
-/* 
+/*
 .chart-container::before {
   content: "";
   position: absolute;

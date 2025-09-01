@@ -1,14 +1,87 @@
 <template>
   <div class="donation">
-    <div
-      v-for="(item, index) in listData"
-      :key="index"
-      class="donation-list"
-      :class="'list' + index"
-    >
+    <div class="donation-list list0">
       <div class="donation-box">
-        <CounterNumber :num="item.data" />
-        <div>{{ item.name }}</div>
+        <counter-number
+          :num="formatData(data.savingCarbonEmission, 1000).num"
+        />
+        <div>
+          节约标准煤({{
+            formatData(data.savingCarbonEmission, 1000, "吨", "kg").unit
+          }})
+        </div>
+      </div>
+      <div class="donation-bg">
+        <div class="glow-line"></div>
+        <svg class="glow-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
+          <rect
+            x="0.5"
+            y="0.5"
+            width="99"
+            height="19"
+            fill="none"
+            stroke="#00dceb"
+            stroke-width="1"
+            stroke-opacity="0.2"
+          />
+          <path
+            id="motionPath"
+            d="M0.5,0.5 H99.5 V19.5 H0.5 V0.5 Z"
+            fill="none"
+            stroke="none"
+          />
+          <circle r="0.6" fill="#00dceb">
+            <animateMotion dur="4s" repeatCount="indefinite">
+              <mpath href="#motionPath" />
+            </animateMotion>
+          </circle>
+        </svg>
+      </div>
+    </div>
+    <div class="donation-list list1">
+      <div class="donation-box">
+        <counter-number
+          :num="formatData(data.savingCarbonDioxideEmission, 1000).num"
+        />
+        <div>
+          CO2减排量({{
+            formatData(data.savingCarbonDioxideEmission, 1000, "吨", "kg").unit
+          }})
+        </div>
+      </div>
+      <div class="donation-bg">
+        <div class="glow-line"></div>
+        <svg class="glow-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
+          <rect
+            x="0.5"
+            y="0.5"
+            width="99"
+            height="19"
+            fill="none"
+            stroke="#00dceb"
+            stroke-width="1"
+            stroke-opacity="0.2"
+          />
+          <path
+            id="motionPath"
+            d="M0.5,0.5 H99.5 V19.5 H0.5 V0.5 Z"
+            fill="none"
+            stroke="none"
+          />
+          <circle r="0.6" fill="#00dceb">
+            <animateMotion dur="4s" repeatCount="indefinite">
+              <mpath href="#motionPath" />
+            </animateMotion>
+          </circle>
+        </svg>
+      </div>
+    </div>
+    <div class="donation-list list2">
+      <div class="donation-box">
+        <counter-number
+          :num="formatData(data.equivalentTreesQuantity, 100).num"
+        />
+        <div>等效植树量({{ "颗" }})</div>
       </div>
       <div class="donation-bg">
         <div class="glow-line"></div>
@@ -45,6 +118,7 @@ import { ref, watch, computed } from "vue";
 import CounterNumber from "./CounterNumber1.vue";
 import { fetchDashboardStatisticsData } from "../api/dashboard";
 import { useRoute } from "vue-router";
+import { formatData } from "../common/util.js";
 
 // 定义props接收数据
 const props = defineProps({
@@ -74,6 +148,11 @@ const defaultData = [
     data: 8470,
   },
 ];
+// const data = reactive({
+//   savingCarbonEmission: void 0,
+//   savingCarbonDioxideEmission: void 0,
+//   equivalentTreesQuantity: void 0,
+// });
 
 const listData = ref([...defaultData]);
 
@@ -84,21 +163,7 @@ async function fetchSocialContributionData() {
     console.log("[ Donation组件获取社会贡献数据 res, ] >", res);
     if (res && res.code === 0 && res.data) {
       // 将接口返回的对象数据转换为数组格式
-      const apiData = res.data;
-      return [
-        {
-          name: "节约标准煤(kg)",
-          data: apiData.savingCarbonEmission || 0,
-        },
-        {
-          name: "CO2减排量(kg)",
-          data: apiData.savingCarbonDioxideEmission || 0,
-        },
-        {
-          name: "等效植树量(颗)",
-          data: apiData.equivalentTreesQuantity || 0,
-        },
-      ];
+      // Object.assign(data, res.data);
     }
   } catch (error) {
     console.error("获取社会贡献数据失败:", error);
@@ -117,7 +182,7 @@ async function updateData() {
     }));
   } else {
     // 调用接口获取数据
-    listData.value = await fetchSocialContributionData();
+    // listData.value = await fetchSocialContributionData();
   }
 }
 

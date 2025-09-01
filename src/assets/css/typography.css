@@ -16,6 +16,7 @@ body {
   font-size: var(--font-md);
   line-height: var(--line-height-normal);
   color: rgba(255, 255, 255, 0.87);
+  background-color: transparent !important;
   margin: 0;
   padding: 0;
 }

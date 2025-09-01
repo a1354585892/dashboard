@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+// 全局标志，防止重复处理401错误
+let isHandling401 = false
+
 // 特殊处理函数 - 401未授权处理
 function handle401Unauthorized(error) {
   console.log('401 未授权访问:', error)
@@ -23,7 +26,27 @@ function handle401Unauthorized(error) {
 // 特殊处理函数 - 业务code码非0处理
 function handleBusinessCodeError(code, message, response = null) {
   console.log(`业务错误 code: ${code}, message: ${message}`)
-  // TODO: 在这里添加业务code码非0的特殊处理逻辑
+  
+  // 处理401业务错误码
+  if (code === 401 && !isHandling401) {
+    isHandling401 = true
+    console.log('401 啊 401');
+    
+    const baseApi = import.meta.env.VITE_APP_BASE_URL || '/api'
+    const loginUrl = baseApi + '/#/login'
+    // 打开新窗口
+    window.open(loginUrl, '_blank')
+    // 关闭当前页面
+    // window.close()
+    // 延迟重置标志，防止短时间内重复处理
+    // setTimeout(() => {
+    //   isHandling401 = false
+    // }, 100)
+    
+    return Promise.reject(new Error('未授权访问，已跳转到登录页面'))
+  }
+  
+  // TODO: 在这里添加其他业务code码非0的特殊处理逻辑
   // 例如：显示错误提示、特定错误码的特殊处理等
 
   // 示例处理逻辑（可根据实际需求修改）:
@@ -78,7 +101,7 @@ service.interceptors.request.use(
     if (token) {
       config.headers.Authorization = 'Bearer ' + token
     }
-    console.log(config, 'config')
+    // console.log(config, 'config')
     return config
   },
   error => {

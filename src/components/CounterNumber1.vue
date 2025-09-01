@@ -69,13 +69,11 @@ onBeforeUnmount(() => {
 });
 </script>
 
-
 <style scoped>
 .num {
-  font-size: 2rem;
+  font-size: 1.4rem;
   color: #6ae6ff;
   font-weight: 500;
   text-align: center;
 }
 </style>
-
