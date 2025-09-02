@@ -168,7 +168,8 @@ onBeforeUnmount(() => {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    // justify-content: space-around;
+    justify-content: space-between;
   }
   .main-list {
     padding-bottom: 4px;
@@ -180,6 +181,7 @@ onBeforeUnmount(() => {
     flex: 1;
     display: flex;
     align-items: center;
+    max-height: 20%;
     // margin-bottom: var(--spacing-v-xs);
 
     &:last-child {
