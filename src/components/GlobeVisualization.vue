@@ -19,6 +19,7 @@ let earthInstance = null;
 
 // 地球配置
 const earthConfig = {
+  R: 180,
   bgStyle: {
     color: "#00DCEB",
     opacity: 0,
@@ -69,6 +70,9 @@ const earthConfig = {
     dragConfig: {
       disableY: true,
     },
+  },
+  bgStyle: {
+    color: "#030929",
   },
 };
 

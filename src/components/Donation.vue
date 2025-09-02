@@ -209,7 +209,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 1vh;
+  gap: 1.2vh;
 }
 
 .donation-list {

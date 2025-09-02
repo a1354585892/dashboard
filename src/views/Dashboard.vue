@@ -617,7 +617,7 @@ onBeforeUnmount(() => {
 /* 底部组件 - 动态分配空间 */
 .main-left-box > .side-bottom,
 .main-right-box > .side-bottom {
-  flex: 1; /* 底部组件权重较低 */
+  flex: 1.2; /* 底部组件权重较低 */
   min-height: 0;
   // overflow: hidden;
 }
