@@ -36,36 +36,37 @@ let earthInstance = null;
 
 // 地球配置
 const earthConfig = {
-  R: 180,
-  bgStyle: {
-    color: "transparent", // 设置为透明，避免白色背景
-    opacity: 0,
-  },
+  R: 150, // 大小
+  // bgStyle: {
+  //   color: "00ffff", // 设置为透明，避免白色背景
+  //   opacity: 1,
+  // },
+  stopRotateByHover: true, // 鼠标划过，地球停止转动
   mapStyle: {
-    areaColor: "#187BB2", // 地区
-    lineColor: "#00DCEB",
+    areaColor: "#0080b3", // 国家地区背景
+    lineColor: "#00DCEB", // 地区边界颜色
   },
   spriteStyle: {
-    color: "#00DCEB",
-    size: 2.5,
+    color: "#0080b3", // 光晕颜色
+    // size: 2.5,
     show: true,
   },
   pathStyle: {
-    color: "#00DCEB",
+    color: "#00DCEB", // 飞线基础颜色
     show: true,
   },
   flyLineStyle: {
-    color: "#00DCEB",
+    color: "#00DCEB", // 飞线流星颜色
     show: true,
   },
-  roadStyle: {
-    flyLineStyle: {
-      color: "#00DCEB",
-    },
-    pathStyle: {
-      color: "#00DCEB",
-    },
-  },
+  // roadStyle: {
+  //   flyLineStyle: {
+  //     color: "#00DCEB", //
+  //   },
+  //   pathStyle: {
+  //     color: "#00DCEB",
+  //   },
+  // },
   scatterStyle: {
     color: "#00DCEB",
   },
@@ -74,14 +75,14 @@ const earthConfig = {
     opacity: 0.5,
   },
   mapStreamStyle: {
-    color: "#00DCEB",
+    color: "#ff0000",
     opacity: 1,
     speed: 1,
     splitLine: 3,
   },
   // 地球
   earth: {
-    color: "#00142C",
+    color: "#05345F", // 整体颜色(海洋)
     // material: "MeshPhongMaterial", //材质类型
     dragConfig: {
       disableY: true,
@@ -96,6 +97,9 @@ const earthConfig = {
     alpha: true, // 启用透明度
     antialias: true,
     clearColor: "transparent", // 清除颜色设为透明
+  },
+  hoverRegionStyle: {
+    show: false,
   },
 };
 
@@ -124,6 +128,11 @@ async function initEarth() {
       map: "world",
       config: earthConfig,
       rotateSpeed: 0.002,
+      bgStyle: {
+        color: "#0000FF",
+        opacity: 1,
+      },
+      // light: "RectAreaLight", //  通透性： AmbientLight | 线形：PointLight | 定向手电筒：DirectionalLight | 和前面没啥区别 RectAreaLight
     });
 
     const chinaData = geojson.features.find((item) => {
