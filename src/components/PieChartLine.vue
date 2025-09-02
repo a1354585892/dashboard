@@ -1,20 +1,22 @@
 <template>
-  <div class="chart-container">
-    <light-beam
-      :beam-count="6"
-      beam-color="rgba(0, 255, 204, 0.15)"
-      :rotation-speed="3000"
-    />
-    <particle-effect
-      :particle-count="6"
-      particle-color="rgba(0, 255, 204, 0.5)"
-      :animation-speed="3500"
-    />
-    <div class="chart-box">
-      <div class="chart-title">
-        <div class="title">应用领域</div>
+  <div class="container-box">
+    <div class="chart-container">
+      <light-beam
+        :beam-count="6"
+        beam-color="rgba(0, 255, 204, 0.15)"
+        :rotation-speed="3000"
+      />
+      <particle-effect
+        :particle-count="6"
+        particle-color="rgba(0, 255, 204, 0.5)"
+        :animation-speed="3500"
+      />
+      <div class="chart-box">
+        <div class="chart-title">
+          <div class="title">应用领域</div>
+        </div>
+        <div class="chart" ref="chartRef"></div>
       </div>
-      <div class="chart" ref="chartRef"></div>
     </div>
   </div>
 </template>
@@ -142,8 +144,8 @@ function updateChart() {
       {
         name: "应用领域",
         type: "pie",
-        radius: ["30%", "70%"],
-        center: ["50%", "55%"],
+        radius: ["30%", "68%"],
+        center: ["50%", "56%"],
         avoidLabelOverlap: false,
         label: {
           show: false,
@@ -253,34 +255,14 @@ watch(
 <style lang="less" scoped>
 .chart-container {
   width: 100%;
-  // padding-top: 68.86%;
-  border-radius: 0.25rem;
-  box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+  min-height: 0; /* 移除固定最小高度，让flex控制 */
+  border-radius: var(--radius-md);
   transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-/* 
-.chart-container::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: conic-gradient(
-    from 0deg,
-    transparent,
-    rgba(0, 228, 255, 0.2),
-    rgba(0, 255, 204, 0.2),
-    rgba(255, 204, 0, 0.2),
-    rgba(255, 102, 102, 0.2),
-    transparent
-  );
-  border-radius: 10px;
-  z-index: -1;
-  animation: rotating-border 4s linear infinite;
-} */
-
 .chart-container::after {
   content: "";
   position: absolute;
@@ -308,15 +290,6 @@ watch(
   animation-duration: 2s;
 }
 
-@keyframes rotating-border {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes pie-pulse {
   0%,
   100% {
@@ -328,24 +301,7 @@ watch(
     opacity: 0.1;
   }
 }
-@keyframes pie-title-glow {
-  0% {
-    text-shadow: 0 0 5px rgba(0, 228, 255, 0.5);
-  }
-  100% {
-    text-shadow: 0 0 15px rgba(0, 228, 255, 0.8),
-      0 0 25px rgba(0, 255, 204, 0.4), 0 0 35px rgba(255, 204, 0, 0.2);
-  }
-}
 
-@keyframes pie-title-rotate {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
 .chart-box {
   position: absolute;
   inset: 0;
@@ -356,22 +312,10 @@ watch(
   // border-radius: 8px;
   background: #00142c;
   border-radius: 3%;
-  &::after {
-    display: block;
-    content: "";
-    width: calc(100% + 2px);
-    height: calc(100% + 2px);
+  .chart-title {
     position: absolute;
     left: -1px;
     top: -1px;
-    border-radius: 3%;
-    background-image: linear-gradient(139deg, #00dceb, #00345f);
-    z-index: -1;
-  }
-  .chart-title {
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 37%;
     padding-top: 7.4%;
     background: url("../assets/title-mark.png") no-repeat center center;

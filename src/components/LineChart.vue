@@ -1,11 +1,13 @@
 <template>
-  <div class="chart-container">
-    <ECGEffect :line-count="4" :speed="1500" color="#00e4ff" />
-    <div class="chart-box">
-      <div class="chart-title">
-        <div class="title">充放电趋势</div>
+  <div class="container-box">
+    <div class="chart-container">
+      <ECGEffect :line-count="4" :speed="1500" color="#00e4ff" />
+      <div class="chart-box">
+        <div class="chart-title">
+          <div class="title">充放电趋势</div>
+        </div>
+        <div class="chart" ref="chartRef"></div>
       </div>
-      <div class="chart" ref="chartRef"></div>
     </div>
   </div>
 </template>
@@ -173,8 +175,10 @@ function updateChart() {
         show: false,
       },
       name: "kWh",
+      nameLocation: "end",
       nameTextStyle: {
         color: "rgba(255, 255, 255, 0.7)",
+        align: "right",
       },
     },
     series: [
@@ -348,40 +352,14 @@ watch(
 <style lang="less" scoped>
 .chart-container {
   width: 100%;
-  // height: 100%;
   min-height: 0; /* 移除固定最小高度，让flex控制 */
-  // padding: var(--spacing-md);
-  background-color: rgba(0, 20, 80, 0.3);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(0, 228, 255, 0.2);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
-/*
-.chart-container::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(0, 228, 255, 0.3),
-    transparent,
-    rgba(0, 228, 255, 0.3),
-    transparent
-  );
-  background-size: 400% 400%;
-  border-radius: 10px;
-  z-index: -1;
-  animation: glowing-border 3s ease-in-out infinite;
-} */
 
 .chart-container::after {
   content: "";
@@ -409,16 +387,6 @@ watch(
   animation-duration: 1.5s;
 }
 
-@keyframes glowing-border {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 @keyframes scanning-light {
   0% {
     left: -100%;
@@ -428,71 +396,19 @@ watch(
   }
 }
 
-.chart-title::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 228, 255, 0.1) 0%,
-    transparent 70%
-  );
-  animation: title-pulse 3s ease-in-out infinite;
-  z-index: -1;
-}
-
-@keyframes title-glow {
-  0% {
-    text-shadow: 0 0 5px rgba(0, 228, 255, 0.5);
-  }
-  100% {
-    text-shadow: 0 0 15px rgba(0, 228, 255, 0.8),
-      0 0 25px rgba(0, 228, 255, 0.4);
-  }
-}
-
-@keyframes title-pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.1;
-  }
-}
-
 .chart-box {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   left: 0px;
-  margin-left: 1px;
   // border-radius: 8px;
   background: #00142c;
   border-radius: 3%;
-  &::after {
-    display: block;
-    content: "";
-    width: calc(100% + 2px);
-    height: calc(100% + 2px);
+  .chart-title {
     position: absolute;
     left: -1px;
     top: -1px;
-    border-radius: 3%;
-    background-image: linear-gradient(139deg, #00dceb, #00345f);
-    z-index: -1;
-  }
-  .chart-title {
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 37%;
     padding-top: 7.4%;
     background: url("../assets/title-mark.png") no-repeat center center;

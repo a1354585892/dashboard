@@ -35,8 +35,7 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style lang="less" scoped>
 .title-container {
@@ -349,7 +348,7 @@
   .trapezoid {
     width: 30%;
     height: 1rem;
-    // border: 1px solid #a6f9ff;
+    // border: 1px solid #00F2FF;
     // border-top: transparent;
     position: relative;
     &.trapezoid-l {
@@ -361,11 +360,11 @@
         position: absolute;
         right: 0;
         top: 0;
-        border: 1px solid #a6f9ff;
+        border: 1px solid #00f2ff;
         border-top: 0;
         border-left: 0;
         transform: skewX(-30deg);
-        border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 2px;
       }
       &::before {
         display: block;
@@ -375,11 +374,11 @@
         position: absolute;
         left: 0;
         top: 0;
-        border: 1px solid #a6f9ff;
+        border: 1px solid #00f2ff;
         border-top: 0;
         border-right: 0;
         transform: skewX(30deg);
-        border-bottom-left-radius: 4px;
+        border-bottom-left-radius: 2px;
       }
     }
     &.trapezoid-r {
@@ -391,11 +390,11 @@
         position: absolute;
         right: 0;
         top: 0;
-        border: 1px solid #a6f9ff;
+        border: 1px solid #00f2ff;
         border-top: 0;
         border-left: 0;
         transform: skewX(-30deg);
-        border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 2px;
       }
       &::before {
         display: block;
@@ -405,11 +404,11 @@
         position: absolute;
         left: 0;
         top: 0;
-        border: 1px solid #a6f9ff;
+        border: 1px solid #00f2ff;
         border-top: 0;
         border-right: 0;
         transform: skewX(30deg);
-        border-bottom-left-radius: 4px;
+        border-bottom-left-radius: 2px;
       }
     }
   }
@@ -417,7 +416,7 @@
     width: 10%;
     height: 0.6rem;
     margin-top: 0.4rem;
-    background: #a6f9ff;
+    background: rgba(0, 242, 255, 1);
     border-radius: 1rem;
   }
 }
