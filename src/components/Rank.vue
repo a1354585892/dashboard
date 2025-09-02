@@ -11,7 +11,7 @@
             <div>{{ item.country }}</div>
             <div>
               <!-- {{ item.data }} -->
-              <CounterNumber :num="item.data" />
+              <CounterNumber :num="item.data" color="#fff" />
             </div>
           </div>
           <div
