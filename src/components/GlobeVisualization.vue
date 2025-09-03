@@ -22,6 +22,7 @@
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import earthFlyLine from "earth-flyline";
 import geojson from "../common/world.json";
+import { debounce } from "../utils/screenAdapter.js";
 
 const props = defineProps({
   data: {
@@ -105,11 +106,11 @@ const earthConfig = {
 
 onMounted(() => {
   initEarth();
-  window.addEventListener("resize", handleResize);
+  window.addEventListener("resize", debouncedHandleResize);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize);
+  window.removeEventListener("resize", debouncedHandleResize);
   if (earthInstance) {
     earthInstance.dispose();
   }
@@ -302,8 +303,12 @@ function updateEarthData() {
 function handleResize() {
   if (earthInstance && globeContainer.value) {
     earthInstance.resize();
+    earthInstance.render();
   }
 }
+
+// 创建防抖版本的resize处理函数
+const debouncedHandleResize = debounce(handleResize, 300);
 
 // 监听数据变化
 watch(

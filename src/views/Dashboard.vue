@@ -437,7 +437,7 @@ onBeforeUnmount(() => {
   // border: 1px solid rgba(0, 228, 255, 0.3);
   // box-shadow: 0 0 15px rgba(0, 228, 255, 0.3);
   width: 140%;
-  height: 100%;
+  height: 68vh;
   position: absolute;
   z-index: 30;
   left: -20%;

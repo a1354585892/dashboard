@@ -192,6 +192,9 @@ function updateChart() {
         fontSize: 10,
       },
       itemGap: 8,
+      itemStyle: {
+        borderWidth: 1,
+      },
     },
     series: [
       {
