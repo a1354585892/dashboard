@@ -101,7 +101,7 @@ function updateChart() {
         color: "rgba(255, 255, 255, 0.7)",
         fontSize: 12,
       },
-      itemGap: 10,
+      itemGap: 8,
     },
     series: [
       {

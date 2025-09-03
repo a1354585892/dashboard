@@ -132,7 +132,7 @@ async function initEarth() {
         color: "#0000FF",
         opacity: 1,
       },
-      // light: "RectAreaLight", //  通透性： AmbientLight | 线形：PointLight | 定向手电筒：DirectionalLight | 和前面没啥区别 RectAreaLight
+      // light: "PointLight", //  通透性： AmbientLight | 线形：PointLight | 定向手电筒：DirectionalLight | 和前面没啥区别 RectAreaLight
     });
 
     const chinaData = geojson.features.find((item) => {

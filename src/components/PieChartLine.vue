@@ -127,18 +127,20 @@ function updateChart() {
       borderWidth: 1,
       textStyle: {
         color: "#fff",
-        fontSize: 12,
+        fontSize: 10,
       },
     },
     legend: {
       // orient: "vertical",
-      right: "20",
-      top: "10%",
+      itemWidth: 15,
+      itemHeight: 10,
+      right: "15",
+      top: "5%",
       textStyle: {
         color: "rgba(255, 255, 255, 1)",
-        fontSize: 12,
+        fontSize: 10,
       },
-      // itemGap: 10,
+      itemGap: 8,
     },
     series: [
       {
@@ -153,7 +155,7 @@ function updateChart() {
         emphasis: {
           label: {
             show: true,
-            fontSize: "14",
+            fontSize: "12",
             fontWeight: "bold",
             color: "#fff",
             textShadowColor: "rgba(0, 228, 255, 0.8)",

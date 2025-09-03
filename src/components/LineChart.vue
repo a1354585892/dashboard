@@ -133,7 +133,7 @@ function updateChart() {
 
   const option = {
     grid: {
-      top: "24.38%",
+      top: "22%",
       right: 0,
       bottom: "10%",
       left: "4.6%",
@@ -174,18 +174,30 @@ function updateChart() {
       axisTick: {
         show: false,
       },
-      name: "kWh",
+      // name: "kWh",
       nameLocation: "end",
       nameTextStyle: {
         color: "rgba(255, 255, 255, 0.7)",
         align: "right",
       },
     },
+    legend: {
+      // orient: "vertical",
+      itemWidth: 15,
+      itemHeight: 10,
+      right: "15",
+      top: "5%",
+      textStyle: {
+        color: "rgba(255, 255, 255, 1)",
+        fontSize: 10,
+      },
+      itemGap: 8,
+    },
     series: [
       {
         data: seriesData.value,
         type: "line",
-        name: "充电",
+        name: "充电(kWh)",
         // smooth: true,
         symbol: "circle",
         symbolSize: 0,
@@ -216,7 +228,7 @@ function updateChart() {
       {
         data: seriesData1.value,
         type: "line",
-        name: "放电",
+        name: "放电(kWh)",
         // smooth: true,
         symbol: "circle",
         symbolSize: 0,
